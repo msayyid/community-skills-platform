@@ -5,15 +5,102 @@ const express = require("express");
 var app = express();
 
 // Add static files location
-app.use(express.static("static"));
+app.use(express.static("app/static"));
 
 // Get the functions in the db.js file to use
 const db = require('./services/db');
+
+// pug template engine
+app.set("view engine", "pug");
+app.set("views", "./app/views");
+
+
+// load user class (model)
+const { User } = require("./models/user");
+const { Listing } = require("./models/listing");
+const { Category } = require("./models/category");
 
 // Create a route for root - /
 app.get("/", function(req, res) {
     res.send("Hello world!");
 });
+
+// users
+
+app.get("/all-users-formatted", async function(req, res) {
+    const sql = `select * from users`;
+    const results = await db.query(sql);
+    res.render("all-users-formatted", {
+        results: results
+    });
+    console.log("i can see all the users that will be formatted in here");
+    console.log(results);
+
+})
+
+app.get("/single-user/:id", async function(req, res) {
+    const uId = req.params.id;
+    let user = new User(uId);
+    await user.getUser();
+    res.render("user", {
+        user:user
+    });
+    console.log("now i need to be seeing a user with a givn id");
+    console.log(user);
+});
+
+// listings
+
+app.get("/all-listings-formatted", async function(req, res) {
+    const sql = `select l.*, c.category_name
+                        from listings l
+                        join categories c on l.category_id = c.category_id`;
+    const result = await db.query(sql);
+    res.render("all-listings-formatted", {
+        listings:result
+    });
+    console.log(result);
+});
+
+app.get("/listing-detail/:listing_id", async function (req, res){
+    const listing_id = req.params.listing_id;
+    let listing = new Listing(listing_id);
+    await listing.getListingData();
+    res.render("listing-detail", {
+        listing:listing
+    });
+    console.log(listing);
+});
+
+// categories
+app.get("/all-categories", async function(req, res) {
+    const categories = await Category.getAllCategories();
+    res.render("all-categories", {
+        categories:categories
+    });
+    console.log("i am checking whether categories loading or not");
+    console.log(categories);
+});
+
+app.get("/all-categories/:id", async function(req, res) {
+    const category_id = req.params.id;
+    const listings = await Listing.getListingsByCategoryId(category_id);
+    res.render("category-by-id", {
+        listings:listings
+    });
+    console.log("this is what i need");
+    console.log(listings);
+
+});
+
+app.get("/project_db_test", async function (req, res) {
+    const sql = `select user_id, first_name, last_name, email, location, bio
+                 from users`;
+    const results = await db.query(sql);
+    res.send(results);
+    console.log("we ve got the results from our poject_db database");
+    console.log(results)
+})
 
 // Create a route for testing the db
 app.get("/db_test", function(req, res) {
@@ -46,3 +133,9 @@ app.get("/hello/:name", function(req, res) {
 app.listen(3000,function(){
     console.log(`Server running at http://127.0.0.1:3000/`);
 });
+
+// questions:
+// regarding the multiple database queries 
+// i am calling one in for example in models (user, listing)
+// and one more to get all the data in app.js (all-users-formatted, etc) 
+// is this how it is supposed to be? could we optimize it?

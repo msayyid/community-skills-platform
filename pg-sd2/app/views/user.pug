@@ -1,0 +1,23 @@
+extends layout 
+block content 
+    .main-content  
+        h1 User Profile Page
+        h1 User ID: #{user.user_id}
+        h1 User Name: #{user.first_name}  #{user.last_name}
+        h1 User Email Address: #{user.email}
+        br
+
+        h2 Detailed Data for #{user.first_name} #{user.last_name}
+        - const hiddentFields = ['created_at', 'latitude', 'longitude', 'updated_at', 'password_hash']
+        table(border=1)
+            tr 
+                th Field 
+                th Value 
+        
+            each value, key in user 
+                if !hiddentFields.includes(key)
+                    tr 
+                        td #{key}
+                        td #{value} 
+
+        h3 Joined On #{user.formatted_created_at}
