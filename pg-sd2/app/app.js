@@ -57,6 +57,7 @@ app.get("/all-listings-formatted", async function(req, res) {
                         join categories c on l.category_id = c.category_id`;
     const result = await db.query(sql);
     const tags = await Listing.getAllTags();
+    const listings_count = await Listing.getListingsCount();
     res.render("all-listings-formatted", {
         listings:result,
         tags:tags
@@ -64,6 +65,9 @@ app.get("/all-listings-formatted", async function(req, res) {
     console.log(result);
     console.log("these are the tags only");
     console.log(tags);
+
+    console.log("here i have got LISTINGS COUNT");
+    console.log(listings_count);
 });
 
 app.get("/listing-detail/:listing_id", async function (req, res){

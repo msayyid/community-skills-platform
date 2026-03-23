@@ -1,0 +1,505 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.3
+-- https://www.phpmyadmin.net/
+--
+-- Host: db
+-- Generation Time: Mar 23, 2026 at 04:01 AM
+-- Server version: 9.6.0
+-- PHP Version: 8.3.26
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `project_db`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `categories`
+--
+
+CREATE TABLE `categories` (
+  `category_id` int NOT NULL,
+  `category_name` varchar(255) NOT NULL,
+  `description` text,
+  `icon` varchar(255) DEFAULT NULL,
+  `listing_count` int DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `categories`
+--
+
+INSERT INTO `categories` (`category_id`, `category_name`, `description`, `icon`, `listing_count`) VALUES
+(1, 'Books', 'Books and study materials that can be borrowed, swapped, or passed on to other students.', NULL, 0),
+(2, 'Electronics', 'Useful electronic items and accessories for study, daily life, and shared campus living.', NULL, 0),
+(3, 'Kitchen', 'Kitchen tools and appliances suitable for shared flats, halls, and student homes.', NULL, 0),
+(4, 'Sports', 'Sports and fitness items for casual exercise, training, and outdoor activities.', NULL, 0),
+(5, 'Furniture', 'Furniture and room essentials that help students furnish or organise their space.', NULL, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `listings`
+--
+
+CREATE TABLE `listings` (
+  `listing_id` int NOT NULL,
+  `user_id` int NOT NULL,
+  `category_id` int NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `description` text NOT NULL,
+  `exchange_type` enum('lending','swap','giveaway') NOT NULL,
+  `condition_status` enum('like_new','good','fair','well_used') NOT NULL,
+  `condition_notes` text,
+  `photo_url_1` varchar(255) DEFAULT NULL,
+  `photo_url_2` varchar(255) DEFAULT NULL,
+  `photo_url_3` varchar(255) DEFAULT NULL,
+  `swap_preferences` text,
+  `is_available` tinyint(1) DEFAULT '1',
+  `view_count` int DEFAULT '0',
+  `request_count` int DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `listings`
+--
+
+INSERT INTO `listings` (`listing_id`, `user_id`, `category_id`, `title`, `description`, `exchange_type`, `condition_status`, `condition_notes`, `photo_url_1`, `photo_url_2`, `photo_url_3`, `swap_preferences`, `is_available`, `view_count`, `request_count`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 'Python Programming Book', 'Good for beginners', 'lending', 'good', NULL, NULL, NULL, NULL, NULL, 1, 0, 0, '2026-03-19 00:26:42', '2026-03-19 00:26:42'),
+(2, 2, 2, 'MacBook Charger', 'Works perfectly', 'giveaway', 'good', NULL, NULL, NULL, NULL, NULL, 1, 0, 0, '2026-03-19 00:26:42', '2026-03-19 00:26:42'),
+(3, 3, 3, 'Rice Cooker', 'Small size', 'lending', 'fair', NULL, NULL, NULL, NULL, NULL, 1, 0, 0, '2026-03-19 00:26:42', '2026-03-19 00:26:42'),
+(4, 4, 4, 'Yoga Mat', 'Barely used', 'swap', 'like_new', NULL, NULL, NULL, NULL, NULL, 1, 0, 0, '2026-03-19 00:26:42', '2026-03-19 00:26:42'),
+(5, 5, 5, 'Desk Chair', 'Used but comfy', 'giveaway', 'well_used', NULL, NULL, NULL, NULL, NULL, 1, 0, 0, '2026-03-19 00:26:42', '2026-03-19 00:26:42'),
+(6, 6, 1, 'Algorithms Book', 'Helpful for exams', 'lending', 'good', NULL, NULL, NULL, NULL, NULL, 1, 0, 0, '2026-03-19 00:26:42', '2026-03-19 00:26:42'),
+(7, 7, 2, 'Bluetooth Speaker', 'Loud and clear', 'swap', 'good', NULL, NULL, NULL, NULL, NULL, 1, 0, 0, '2026-03-19 00:26:42', '2026-03-19 00:26:42'),
+(8, 8, 3, 'Toaster', 'Works fine', 'giveaway', 'fair', NULL, NULL, NULL, NULL, NULL, 1, 0, 0, '2026-03-19 00:26:42', '2026-03-19 00:26:42'),
+(9, 9, 4, 'Football', 'Almost new', 'lending', 'like_new', NULL, NULL, NULL, NULL, NULL, 1, 0, 0, '2026-03-19 00:26:42', '2026-03-19 00:26:42'),
+(10, 10, 5, 'Study Desk', 'Moving out', 'giveaway', 'good', NULL, NULL, NULL, NULL, NULL, 1, 0, 0, '2026-03-19 00:26:42', '2026-03-19 00:26:42'),
+(11, 11, 1, 'Database Systems Book', 'Second year module', 'lending', 'good', NULL, NULL, NULL, NULL, NULL, 1, 0, 0, '2026-03-19 00:26:42', '2026-03-19 00:26:42'),
+(12, 12, 2, 'Wireless Mouse', 'Smooth and fast', 'giveaway', 'like_new', NULL, NULL, NULL, NULL, NULL, 1, 0, 0, '2026-03-19 00:26:42', '2026-03-19 00:26:42'),
+(13, 13, 3, 'Air Fryer', 'Great condition', 'swap', 'good', NULL, NULL, NULL, NULL, NULL, 1, 0, 0, '2026-03-19 00:26:42', '2026-03-19 00:26:42'),
+(14, 14, 4, 'Dumbbells Set', '5kg each', 'lending', 'good', NULL, NULL, NULL, NULL, NULL, 1, 0, 0, '2026-03-19 00:26:42', '2026-03-19 00:26:42'),
+(15, 15, 5, 'Lamp', 'Desk lamp', 'giveaway', 'good', NULL, NULL, NULL, NULL, NULL, 1, 0, 0, '2026-03-19 00:26:42', '2026-03-19 00:26:42'),
+(16, 1, 1, 'Discrete Mathematics Revision Guide', 'Useful for first-year and second-year revision. A few highlighted pages but still very clear.', 'lending', 'good', 'Some notes in pencil on a few pages.', NULL, NULL, NULL, NULL, 1, 0, 0, '2026-03-23 09:00:00', '2026-03-23 09:00:00'),
+(17, 2, 2, 'USB-C Hub', 'Small hub with HDMI and USB ports. Still works well and handy for library or home use.', 'giveaway', 'good', 'Minor scratches from normal use.', NULL, NULL, NULL, NULL, 1, 0, 0, '2026-03-23 09:05:00', '2026-03-23 09:05:00'),
+(18, 3, 3, 'Saucepan Set', 'Set of two saucepans suitable for a shared student kitchen. Clean and fully usable.', 'lending', 'good', 'Handles are slightly worn but sturdy.', NULL, NULL, NULL, NULL, 1, 0, 0, '2026-03-23 09:10:00', '2026-03-23 09:10:00'),
+(19, 4, 4, 'Skipping Rope', 'Lightweight skipping rope for quick workouts at home or outdoors.', 'swap', 'like_new', 'Used only a couple of times.', NULL, NULL, NULL, 'Open to swapping for a yoga block or resistance band.', 1, 0, 0, '2026-03-23 09:15:00', '2026-03-23 09:15:00'),
+(20, 5, 5, 'Bedside Table', 'Compact bedside table with one shelf. Good for student rooms with limited space.', 'giveaway', 'fair', 'A few marks on the top surface.', NULL, NULL, NULL, NULL, 1, 0, 0, '2026-03-23 09:20:00', '2026-03-23 09:20:00'),
+(21, 6, 1, 'Statistics Flashcards', 'Printed revision flashcards for core statistics topics. Useful before tests or coursework deadlines.', 'giveaway', 'good', 'Kept in a small ring binder.', NULL, NULL, NULL, NULL, 1, 0, 0, '2026-03-23 09:25:00', '2026-03-23 09:25:00'),
+(22, 7, 2, 'Wired Keyboard', 'Full-size keyboard that works well for essays, coding, and general study use.', 'lending', 'good', 'A bit shiny on some keys from normal use.', NULL, NULL, NULL, NULL, 1, 0, 0, '2026-03-23 09:30:00', '2026-03-23 09:30:00'),
+(23, 8, 3, 'Electric Kettle', 'Simple kettle that boils quickly and works fine. Good spare item for a new flat.', 'giveaway', 'good', 'Limescale cleaned recently.', NULL, NULL, NULL, NULL, 1, 0, 0, '2026-03-23 09:35:00', '2026-03-23 09:35:00'),
+(24, 9, 4, 'Resistance Bands Set', 'Set of resistance bands for home workouts. Easy to store and carry.', 'lending', 'like_new', 'Includes carry pouch.', NULL, NULL, NULL, NULL, 1, 0, 0, '2026-03-23 09:40:00', '2026-03-23 09:40:00'),
+(25, 10, 5, 'Laundry Basket', 'Lightweight laundry basket that is easy to carry between room and laundry area.', 'giveaway', 'good', 'Clean and in good shape.', NULL, NULL, NULL, NULL, 1, 0, 0, '2026-03-23 09:45:00', '2026-03-23 09:45:00'),
+(26, 11, 1, 'Operating Systems Textbook', 'Older edition but still helpful for understanding core operating systems topics.', 'swap', 'fair', 'Some highlighted sections and light edge wear.', NULL, NULL, NULL, 'Would like to swap for another computing book or a desk accessory.', 1, 0, 0, '2026-03-23 09:50:00', '2026-03-23 09:50:00'),
+(27, 12, 2, 'Desk Fan', 'Small desk fan that is useful during warmer months in halls or shared flats.', 'lending', 'good', 'Quiet on the lower setting.', NULL, NULL, NULL, NULL, 1, 0, 0, '2026-03-23 09:55:00', '2026-03-23 09:55:00'),
+(28, 13, 3, 'Baking Tray', 'Standard baking tray that still has plenty of use left. Good for basic oven cooking.', 'giveaway', 'well_used', 'Visible signs of use but still works properly.', NULL, NULL, NULL, NULL, 1, 0, 0, '2026-03-23 10:00:00', '2026-03-23 10:00:00'),
+(29, 14, 4, 'Tennis Racket', 'Casual-use tennis racket suitable for beginners or occasional games.', 'swap', 'good', 'Grip is still decent and frame is intact.', NULL, NULL, NULL, 'Open to swapping for another sports item of similar use.', 1, 0, 0, '2026-03-23 10:05:00', '2026-03-23 10:05:00'),
+(30, 15, 5, 'Foldable Drying Rack', 'Useful foldable drying rack for small student rooms or shared flats.', 'lending', 'good', 'Folds flat and is easy to store.', NULL, NULL, NULL, NULL, 1, 0, 0, '2026-03-23 10:10:00', '2026-03-23 10:10:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `listing_tags`
+--
+
+CREATE TABLE `listing_tags` (
+  `listing_id` int NOT NULL,
+  `tag_id` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `listing_tags`
+--
+
+INSERT INTO `listing_tags` (`listing_id`, `tag_id`) VALUES
+(1, 1),
+(3, 1),
+(6, 1),
+(11, 1),
+(14, 1),
+(16, 1),
+(21, 1),
+(2, 2),
+(5, 2),
+(8, 2),
+(10, 2),
+(15, 2),
+(17, 2),
+(18, 2),
+(22, 2),
+(1, 3),
+(9, 3),
+(12, 3),
+(24, 3),
+(4, 5),
+(7, 5),
+(13, 5),
+(19, 5),
+(26, 5),
+(29, 5),
+(16, 6),
+(21, 6),
+(26, 6),
+(20, 7),
+(28, 7),
+(19, 8),
+(24, 8),
+(25, 8),
+(27, 8),
+(30, 8),
+(17, 9),
+(22, 9),
+(23, 9),
+(29, 9),
+(18, 10),
+(20, 10),
+(23, 10),
+(25, 10),
+(27, 10),
+(28, 10),
+(30, 10);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `messages`
+--
+
+CREATE TABLE `messages` (
+  `message_id` int NOT NULL,
+  `sender_id` int NOT NULL,
+  `receiver_id` int NOT NULL,
+  `request_id` int DEFAULT NULL,
+  `listing_id` int DEFAULT NULL,
+  `content` text NOT NULL,
+  `is_read` tinyint(1) DEFAULT '0',
+  `sent_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `messages`
+--
+
+INSERT INTO `messages` (`message_id`, `sender_id`, `receiver_id`, `request_id`, `listing_id`, `content`, `is_read`, `sent_at`) VALUES
+(1, 2, 1, 1, NULL, 'Hi, is this available?', 0, '2026-03-19 00:27:17'),
+(2, 1, 2, 1, NULL, 'Yes, it is', 0, '2026-03-19 00:27:17'),
+(3, 3, 2, 2, NULL, 'Can I pick it up today?', 0, '2026-03-19 00:27:17'),
+(4, 4, 3, 3, NULL, 'Thanks for the cooker', 0, '2026-03-19 00:27:17'),
+(5, 5, 4, 4, NULL, 'Still interested?', 0, '2026-03-19 00:27:17'),
+(6, 6, 5, 5, NULL, 'Can I collect tonight?', 0, '2026-03-19 00:27:17'),
+(7, 7, 6, 6, NULL, 'Need it urgently', 0, '2026-03-19 00:27:17'),
+(8, 8, 7, 7, NULL, 'Is it loud?', 0, '2026-03-19 00:27:17'),
+(9, 9, 8, 8, NULL, 'I will come later', 0, '2026-03-19 00:27:17'),
+(10, 10, 9, 9, NULL, 'Is it still available?', 0, '2026-03-19 00:27:17');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ratings`
+--
+
+CREATE TABLE `ratings` (
+  `rating_id` int NOT NULL,
+  `request_id` int NOT NULL,
+  `rater_id` int NOT NULL,
+  `rated_id` int NOT NULL,
+  `score` int NOT NULL,
+  `comment` text,
+  `rating_type` enum('as_lender','as_borrower','as_swapper','as_giver','as_receiver') NOT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `ratings`
+--
+
+INSERT INTO `ratings` (`rating_id`, `request_id`, `rater_id`, `rated_id`, `score`, `comment`, `rating_type`, `created_at`) VALUES
+(1, 3, 4, 3, 5, NULL, 'as_borrower', '2026-03-19 00:27:24'),
+(2, 5, 6, 5, 4, NULL, 'as_giver', '2026-03-19 00:27:24'),
+(3, 8, 9, 8, 5, NULL, 'as_receiver', '2026-03-19 00:27:24'),
+(4, 10, 11, 10, 4, NULL, 'as_giver', '2026-03-19 00:27:24');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `requests`
+--
+
+CREATE TABLE `requests` (
+  `request_id` int NOT NULL,
+  `requester_id` int NOT NULL,
+  `listing_id` int NOT NULL,
+  `status` enum('pending','accepted','declined','completed','cancelled') DEFAULT 'pending',
+  `message` text NOT NULL,
+  `requested_duration` varchar(255) DEFAULT NULL,
+  `swap_offer_description` text,
+  `requested_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `responded_date` timestamp NULL DEFAULT NULL,
+  `completed_date` timestamp NULL DEFAULT NULL,
+  `owner_notes` text
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `requests`
+--
+
+INSERT INTO `requests` (`request_id`, `requester_id`, `listing_id`, `status`, `message`, `requested_duration`, `swap_offer_description`, `requested_date`, `responded_date`, `completed_date`, `owner_notes`) VALUES
+(1, 2, 1, 'pending', 'Can I borrow this for revision?', NULL, NULL, '2026-03-19 00:27:05', NULL, NULL, NULL),
+(2, 3, 2, 'accepted', 'Is charger still available?', NULL, NULL, '2026-03-19 00:27:05', NULL, NULL, NULL),
+(3, 4, 3, 'completed', 'Need it for cooking', NULL, NULL, '2026-03-19 00:27:05', NULL, NULL, NULL),
+(4, 5, 4, 'pending', 'Can swap with skipping rope', NULL, NULL, '2026-03-19 00:27:05', NULL, NULL, NULL),
+(5, 6, 5, 'completed', 'Need chair urgently', NULL, NULL, '2026-03-19 00:27:05', NULL, NULL, NULL),
+(6, 7, 6, 'pending', 'Can I take this for a week?', NULL, NULL, '2026-03-19 00:27:05', NULL, NULL, NULL),
+(7, 8, 7, 'accepted', 'Interested in speaker', NULL, NULL, '2026-03-19 00:27:05', NULL, NULL, NULL),
+(8, 9, 8, 'completed', 'Can collect today', NULL, NULL, '2026-03-19 00:27:05', NULL, NULL, NULL),
+(9, 10, 9, 'pending', 'Need football for match', NULL, NULL, '2026-03-19 00:27:05', NULL, NULL, NULL),
+(10, 11, 10, 'completed', 'Desk still available?', NULL, NULL, '2026-03-19 00:27:05', NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tags`
+--
+
+CREATE TABLE `tags` (
+  `tag_id` int NOT NULL,
+  `tag_name` varchar(255) NOT NULL,
+  `usage_count` int DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `tags`
+--
+
+INSERT INTO `tags` (`tag_id`, `tag_name`, `usage_count`) VALUES
+(1, 'student', 0),
+(2, 'shared-use', 0),
+(3, 'like-new', 0),
+(4, 'urgent', 0),
+(5, 'exchange', 0),
+(6, 'coursework', 0),
+(7, 'moving-out', 0),
+(8, 'compact', 0),
+(9, 'pickup-only', 0),
+(10, 'home-essential', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `user_id` int NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password_hash` varchar(255) NOT NULL,
+  `first_name` varchar(255) NOT NULL,
+  `last_name` varchar(255) NOT NULL,
+  `bio` text,
+  `location` varchar(255) NOT NULL,
+  `latitude` decimal(10,7) DEFAULT NULL,
+  `longitude` decimal(10,7) DEFAULT NULL,
+  `profile_pic` varchar(255) DEFAULT 'default-avatar.png',
+  `points` int DEFAULT '50',
+  `average_rating` decimal(3,2) DEFAULT '0.00',
+  `total_ratings` int DEFAULT '0',
+  `items_lent` int DEFAULT '0',
+  `items_borrowed` int DEFAULT '0',
+  `items_given` int DEFAULT '0',
+  `is_active` tinyint(1) DEFAULT '1',
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`user_id`, `email`, `password_hash`, `first_name`, `last_name`, `bio`, `location`, `latitude`, `longitude`, `profile_pic`, `points`, `average_rating`, `total_ratings`, `items_lent`, `items_borrowed`, `items_given`, `is_active`, `created_at`, `updated_at`) VALUES
+(1, 'alex.turner@roehampton.ac.uk', 'h1', 'Alex', 'Turner', 'Computer science student who likes sharing useful study items. Usually available around campus on weekdays.', 'Roehampton, London', NULL, NULL, 'default-avatar.png', 50, 0.00, 0, 0, 0, 0, 1, '2026-03-19 00:25:51', '2026-03-23 03:57:04'),
+(2, 'sarah.khan@roehampton.ac.uk', 'h2', 'Sarah', 'Khan', 'Postgraduate student based in Putney. Happy to pass on items that are still useful to others.', 'Putney, London', NULL, NULL, 'default-avatar.png', 50, 0.00, 0, 0, 0, 0, 1, '2026-03-19 00:25:51', '2026-03-23 03:57:04'),
+(3, 'james.wilson@roehampton.ac.uk', 'h3', 'James', 'Wilson', 'Enjoys cooking and keeping things practical. Usually responds in the evening.', 'Wandsworth, London', NULL, NULL, 'default-avatar.png', 50, 0.00, 0, 0, 0, 0, 1, '2026-03-19 00:25:51', '2026-03-23 03:57:04'),
+(4, 'emma.clarke@roehampton.ac.uk', 'h4', 'Emma', 'Clarke', 'Keeps active and likes simple item swaps. Prefers clear communication and arranged pickup times.', 'Barnes, London', NULL, NULL, 'default-avatar.png', 50, 0.00, 0, 0, 0, 0, 1, '2026-03-19 00:25:51', '2026-03-23 03:57:04'),
+(5, 'daniel.lee@roehampton.ac.uk', 'h5', 'Daniel', 'Lee', 'Final-year student clearing out spare home items. Mostly shares things that are still in solid condition.', 'Fulham, London', NULL, NULL, 'default-avatar.png', 50, 0.00, 0, 0, 0, 0, 1, '2026-03-19 00:25:51', '2026-03-23 03:57:04'),
+(6, 'olivia.brown@roehampton.ac.uk', 'h6', 'Olivia', 'Brown', 'Often lends books and revision materials to other students. Based near Clapham.', 'Clapham, London', NULL, NULL, 'default-avatar.png', 50, 0.00, 0, 0, 0, 0, 1, '2026-03-19 00:25:51', '2026-03-23 03:57:04'),
+(7, 'noah.davis@roehampton.ac.uk', 'h7', 'Noah', 'Davis', 'Tech-friendly student with a few spare accessories and home items. Open to swaps for useful essentials.', 'Tooting, London', NULL, NULL, 'default-avatar.png', 50, 0.00, 0, 0, 0, 0, 1, '2026-03-19 00:25:51', '2026-03-23 03:57:04'),
+(8, 'mia.evans@roehampton.ac.uk', 'h8', 'Mia', 'Evans', 'Likes keeping things tidy and passing on items instead of wasting them. Usually free on weekends.', 'Richmond, London', NULL, NULL, 'default-avatar.png', 50, 0.00, 0, 0, 0, 0, 1, '2026-03-19 00:25:51', '2026-03-23 03:57:04'),
+(9, 'liam.taylor@roehampton.ac.uk', 'h9', 'Liam', 'Taylor', 'Sports enthusiast who shares equipment when it is not being used. Quick to reply when available.', 'Kingston, London', NULL, NULL, 'default-avatar.png', 50, 0.00, 0, 0, 0, 0, 1, '2026-03-19 00:25:51', '2026-03-23 03:57:04'),
+(10, 'ava.moore@roehampton.ac.uk', 'h10', 'Ava', 'Moore', 'Moving between student places and trying to keep things simple. Happy to give away practical items.', 'Hammersmith, London', NULL, NULL, 'default-avatar.png', 50, 0.00, 0, 0, 0, 0, 1, '2026-03-19 00:25:51', '2026-03-23 03:57:04'),
+(11, 'ethan.white@roehampton.ac.uk', 'h11', 'Ethan', 'White', 'Second-year student interested in databases and systems. Usually lends books and desk items.', 'Chelsea, London', NULL, NULL, 'default-avatar.png', 50, 0.00, 0, 0, 0, 0, 1, '2026-03-19 00:25:51', '2026-03-23 03:57:04'),
+(12, 'sophia.martin@roehampton.ac.uk', 'h12', 'Sophia', 'Martin', 'Keeps spare accessories and kitchen items in good condition. Prefers local pickup.', 'Putney, London', NULL, NULL, 'default-avatar.png', 50, 0.00, 0, 0, 0, 0, 1, '2026-03-19 00:25:51', '2026-03-23 03:57:04'),
+(13, 'lucas.hall@roehampton.ac.uk', 'h13', 'Lucas', 'Hall', 'Enjoys cooking and sharing appliances that still have plenty of use left. Based in Wimbledon.', 'Wimbledon, London', NULL, NULL, 'default-avatar.png', 50, 0.00, 0, 0, 0, 0, 1, '2026-03-19 00:25:51', '2026-03-23 03:57:04'),
+(14, 'amelia.young@roehampton.ac.uk', 'h14', 'Amelia', 'Young', 'Fitness-focused student with a few sports items to lend or swap. Flexible with collection times.', 'Battersea, London', NULL, NULL, 'default-avatar.png', 50, 0.00, 0, 0, 0, 0, 1, '2026-03-19 00:25:51', '2026-03-23 03:57:04'),
+(15, 'harry.king@roehampton.ac.uk', 'h15', 'Harry', 'King', 'Trying to keep useful items in circulation instead of throwing them away. Mostly shares furniture and room essentials.', 'Southfields, London', NULL, NULL, 'default-avatar.png', 50, 0.00, 0, 0, 0, 0, 1, '2026-03-19 00:25:51', '2026-03-23 03:57:04');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `categories`
+--
+ALTER TABLE `categories`
+  ADD PRIMARY KEY (`category_id`),
+  ADD UNIQUE KEY `category_name` (`category_name`);
+
+--
+-- Indexes for table `listings`
+--
+ALTER TABLE `listings`
+  ADD PRIMARY KEY (`listing_id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `category_id` (`category_id`);
+
+--
+-- Indexes for table `listing_tags`
+--
+ALTER TABLE `listing_tags`
+  ADD PRIMARY KEY (`listing_id`,`tag_id`),
+  ADD KEY `tag_id` (`tag_id`);
+
+--
+-- Indexes for table `messages`
+--
+ALTER TABLE `messages`
+  ADD PRIMARY KEY (`message_id`),
+  ADD KEY `sender_id` (`sender_id`),
+  ADD KEY `receiver_id` (`receiver_id`),
+  ADD KEY `request_id` (`request_id`),
+  ADD KEY `listing_id` (`listing_id`);
+
+--
+-- Indexes for table `ratings`
+--
+ALTER TABLE `ratings`
+  ADD PRIMARY KEY (`rating_id`),
+  ADD KEY `request_id` (`request_id`),
+  ADD KEY `rater_id` (`rater_id`),
+  ADD KEY `rated_id` (`rated_id`);
+
+--
+-- Indexes for table `requests`
+--
+ALTER TABLE `requests`
+  ADD PRIMARY KEY (`request_id`),
+  ADD KEY `requester_id` (`requester_id`),
+  ADD KEY `listing_id` (`listing_id`);
+
+--
+-- Indexes for table `tags`
+--
+ALTER TABLE `tags`
+  ADD PRIMARY KEY (`tag_id`),
+  ADD UNIQUE KEY `tag_name` (`tag_name`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`user_id`),
+  ADD UNIQUE KEY `email` (`email`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `categories`
+--
+ALTER TABLE `categories`
+  MODIFY `category_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `listings`
+--
+ALTER TABLE `listings`
+  MODIFY `listing_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+
+--
+-- AUTO_INCREMENT for table `messages`
+--
+ALTER TABLE `messages`
+  MODIFY `message_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `ratings`
+--
+ALTER TABLE `ratings`
+  MODIFY `rating_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `requests`
+--
+ALTER TABLE `requests`
+  MODIFY `request_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `tags`
+--
+ALTER TABLE `tags`
+  MODIFY `tag_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `user_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `listings`
+--
+ALTER TABLE `listings`
+  ADD CONSTRAINT `listings_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`),
+  ADD CONSTRAINT `listings_ibfk_2` FOREIGN KEY (`category_id`) REFERENCES `categories` (`category_id`);
+
+--
+-- Constraints for table `listing_tags`
+--
+ALTER TABLE `listing_tags`
+  ADD CONSTRAINT `listing_tags_ibfk_1` FOREIGN KEY (`listing_id`) REFERENCES `listings` (`listing_id`),
+  ADD CONSTRAINT `listing_tags_ibfk_2` FOREIGN KEY (`tag_id`) REFERENCES `tags` (`tag_id`);
+
+--
+-- Constraints for table `messages`
+--
+ALTER TABLE `messages`
+  ADD CONSTRAINT `messages_ibfk_1` FOREIGN KEY (`sender_id`) REFERENCES `users` (`user_id`),
+  ADD CONSTRAINT `messages_ibfk_2` FOREIGN KEY (`receiver_id`) REFERENCES `users` (`user_id`),
+  ADD CONSTRAINT `messages_ibfk_3` FOREIGN KEY (`request_id`) REFERENCES `requests` (`request_id`),
+  ADD CONSTRAINT `messages_ibfk_4` FOREIGN KEY (`listing_id`) REFERENCES `listings` (`listing_id`);
+
+--
+-- Constraints for table `ratings`
+--
+ALTER TABLE `ratings`
+  ADD CONSTRAINT `ratings_ibfk_1` FOREIGN KEY (`request_id`) REFERENCES `requests` (`request_id`),
+  ADD CONSTRAINT `ratings_ibfk_2` FOREIGN KEY (`rater_id`) REFERENCES `users` (`user_id`),
+  ADD CONSTRAINT `ratings_ibfk_3` FOREIGN KEY (`rated_id`) REFERENCES `users` (`user_id`);
+
+--
+-- Constraints for table `requests`
+--
+ALTER TABLE `requests`
+  ADD CONSTRAINT `requests_ibfk_1` FOREIGN KEY (`requester_id`) REFERENCES `users` (`user_id`),
+  ADD CONSTRAINT `requests_ibfk_2` FOREIGN KEY (`listing_id`) REFERENCES `listings` (`listing_id`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

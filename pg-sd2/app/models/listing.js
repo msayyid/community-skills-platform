@@ -73,6 +73,12 @@ class Listing {
         return result;
 
     }
+
+    static async getListingsCount() {
+        const sql = `select count(*) as total from listings`;
+        const total = await db.query(sql);
+        return total;
+    }
 }
 
 module.exports = {Listing}

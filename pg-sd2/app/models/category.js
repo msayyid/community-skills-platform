@@ -15,7 +15,10 @@ class Category {
     }
 
     static async getAllCategories() {
-        const sql = `select * from categories`;
+        const sql = `select c.*, count(l.listing_id) as listing_count
+                                from categories c
+                                left join listings l on l.category_id = c.category_id
+                                group by c.category_id`;
         const result = await db.query(sql);
         return result;
     }
@@ -30,6 +33,13 @@ class Category {
         }
         Object.assign(this, result[0]);
     }
+
+    // static async getListingsCountByCategory(category_id) {
+    //     const sql = `select count(*) as total_by_category from listings
+    //                             where category_id = ? `
+    //     const total = await db.query(sql, [category_id]);
+    //     return total;
+    // }
 }
 
 module.exports = { Category }
