@@ -20,9 +20,15 @@ const { User } = require("./models/user");
 const { Listing } = require("./models/listing");
 const { Category } = require("./models/category");
 
-// Create a route for root - /
-app.get("/", function(req, res) {
-    res.render("home-page")
+// Create a route for root - / home page
+app.get("/", async function(req, res) {
+    const listings = await Listing.getRecentListings();
+    res.render("home-page", {
+        listings:listings
+    });
+
+    console.log("THIS IS THE HOME PAGE RETURNED OBJECTS");
+    console.log(listings);
 });
 
 // users

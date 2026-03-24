@@ -116,6 +116,25 @@ class Listing {
         });
         return result;
     }
+
+    static async getRecentListings() {
+        const sql = `select l.*, c.category_name
+                            from listings l
+                            join categories c on c.category_id = l.category_id
+                            order by l.created_at desc
+                            limit 6
+                             
+                            `;
+        const result = await db.query(sql);
+        result.forEach(listing => {
+            if(listing.photo_url_1) {
+                listing.image_path = `/images/listings/${photo_url_1}`;
+            } else {
+                listing.image_path = `/images/listings/default-listing-pic.jpg`;
+            }
+        });
+        return result;
+    }
 }
 
 module.exports = {Listing}

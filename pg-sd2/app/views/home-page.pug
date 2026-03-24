@@ -1,12 +1,15 @@
 extends layout
 
 block content
-    .text-center.py-5.mb-4
+
+    // Hero Section
+    .text-center.py-5.mb-4.bg-light.rounded
         h1.display-5.fw-bold.mb-3 Welcome to ShareLoop
         p.lead.text-muted.mb-2 Share More. Waste Less. Connect Better.
         p.text-muted.mb-0
             | Lend, swap, or give away items with people nearby - completely free, no money ever changes hands.
 
+    // Navigation Cards
     .row.g-4.justify-content-center
         .col-md-6.col-lg-4
             .card.h-100.shadow-sm.border-0.text-center
@@ -34,6 +37,78 @@ block content
                     p.card-text.text-muted.mb-4 Explore listings by category
                     .mt-auto
                         a.btn.btn-dark.w-100(href="/all-categories") View Categories
+
+    // Recent Listings Section
+    .mt-5
+        h3.mb-3 Recent Listings
+
+        if listings && listings.length > 0
+            .row.g-4
+                each listing in listings
+                    .col-md-6.col-lg-4
+                        .card.h-100.shadow-sm.border-0
+                            img.card-img-top(
+                                src=listing.image_path
+                                alt="Listing image"
+                                style="height:250px; object-fit:cover;"
+                            )
+
+                            .card-body.d-flex.flex-column
+                                h5.card-title
+                                    a.text-decoration-none.text-dark(
+                                        href=`/listing-detail/${listing.listing_id}`
+                                    ) #{listing.title}
+
+                                p.text-muted.mb-2
+                                    strong Category:
+                                    |  #{listing.category_name}
+
+                                p.text-muted.small.mb-3
+                                    | #{listing.exchange_type || "Unknown"}
+
+                                .mt-auto
+                                    a.btn.btn-dark.w-100(
+                                        href=`/listing-detail/${listing.listing_id}`
+                                    ) View Details
+        else
+            p.text-muted No listings available yet.
+
+//- extends layout
+
+//- block content
+//-     .text-center.py-5.mb-4
+//-         h1.display-5.fw-bold.mb-3 Welcome to ShareLoop
+//-         p.lead.text-muted.mb-2 Share More. Waste Less. Connect Better.
+//-         p.text-muted.mb-0
+//-             | Lend, swap, or give away items with people nearby - completely free, no money ever changes hands.
+
+//-     .row.g-4.justify-content-center
+//-         .col-md-6.col-lg-4
+//-             .card.h-100.shadow-sm.border-0.text-center
+//-                 .card-body.d-flex.flex-column
+//-                     .display-5.mb-3 📦
+//-                     h4.card-title Listings
+//-                     p.card-text.text-muted.mb-4 Browse all available items
+//-                     .mt-auto
+//-                         a.btn.btn-dark.w-100(href="/all-listings-formatted") View Listings
+
+//-         .col-md-6.col-lg-4
+//-             .card.h-100.shadow-sm.border-0.text-center
+//-                 .card-body.d-flex.flex-column
+//-                     .display-5.mb-3 👥
+//-                     h4.card-title Users
+//-                     p.card-text.text-muted.mb-4 View community members
+//-                     .mt-auto
+//-                         a.btn.btn-dark.w-100(href="/all-users-formatted") View Users
+
+//-         .col-md-6.col-lg-4
+//-             .card.h-100.shadow-sm.border-0.text-center
+//-                 .card-body.d-flex.flex-column
+//-                     .display-5.mb-3 🗂️
+//-                     h4.card-title Categories
+//-                     p.card-text.text-muted.mb-4 Explore listings by category
+//-                     .mt-auto
+//-                         a.btn.btn-dark.w-100(href="/all-categories") View Categories
 
 
 //- extends layout 
