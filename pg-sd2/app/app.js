@@ -38,7 +38,8 @@ app.get("/all-users-formatted", async function(req, res) {
         } else {
             user.image_path = `/images/users/default-avatar.jpg`;
         }
-    })
+    });
+    
     res.render("all-users-formatted", {
         results: results
     });
@@ -51,12 +52,16 @@ app.get("/single-user/:id", async function(req, res) {
     const uId = req.params.id;
     let user = new User(uId);
     await user.getUser();
-    await user.setProfilePic("profile_pic_1.jpg");
+    user.setImagePath();
+    let listings = await Listing.getListingsByUserId(uId);
     res.render("user", {
-        user:user
+        user:user,
+        listings:listings
     });
     console.log("now i need to be seeing a user with a givn id");
     console.log(user);
+    console.log("these are the listings of the current user");
+    console.log(listings);
 });
 
 // listings
@@ -66,8 +71,14 @@ app.get("/all-listings-formatted", async function(req, res) {
                         from listings l
                         join categories c on l.category_id = c.category_id`;
     const result = await db.query(sql);
+    result.forEach(listing => {
+        if (listing.photo_url_1) {
+            listing.image_path = `/images/listings/${listing.photo_url_1}`;
+        } else {
+            listing.image_path = `/images/listings/default-listing-pic.jpg`;
+        }
+    });
     const tags = await Listing.getAllTags();
-    const listings_count = await Listing.getListingsCount();
     res.render("all-listings-formatted", {
         listings:result,
         tags:tags
@@ -76,14 +87,13 @@ app.get("/all-listings-formatted", async function(req, res) {
     console.log("these are the tags only");
     console.log(tags);
 
-    console.log("here i have got LISTINGS COUNT");
-    console.log(listings_count);
 });
 
 app.get("/listing-detail/:listing_id", async function (req, res){
     const listing_id = req.params.listing_id;
     let listing = new Listing(listing_id);
     await listing.getListingData();
+    listing.setImagePath();
     res.render("listing-detail", {
         listing:listing
     });

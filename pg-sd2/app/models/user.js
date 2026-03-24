@@ -52,12 +52,22 @@ class User {
 
     }
 
-    async setProfilePic(filename) {
-        const sql = `update users set profile_pic = ? where user_id = ?`;
-        await db.query(sql, [filename, this.user_id]);
-        this.profile_pic = filename;
+    // async setProfilePic(filename) {
+    //     const sql = `update users set profile_pic = ? where user_id = ?`;
+    //     await db.query(sql, [filename, this.user_id]);
+    //     this.profile_pic = filename;
 
+    // }
+    setImagePath() {
+        if (this.profile_pic) {
+            this.image_path = `/images/users/${this.profile_pic}`;
+        } else {
+            this.image_path = `/images/users/default-avatar.jpg`;
+        }
     }
+
+
+
 }
 
 module.exports = { User }

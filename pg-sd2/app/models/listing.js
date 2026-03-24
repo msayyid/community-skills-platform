@@ -52,6 +52,13 @@ class Listing {
                             join categories c on c.category_id = l.category_id
                             where l.category_id=?`;
         const result = await db.query(sql, [category_id]);
+        result.forEach(listing => {
+            if (listing.photo_url_1) {
+                listing.image_path = `/images/listings/${listing.photo_url_1}`;
+            } else {
+                listing.image_path = `/images/listings/default-listing-pic.jpg`;
+            }
+        });
         
         return result;
     }
@@ -70,6 +77,15 @@ class Listing {
                             join categories c on c.category_id = l.category_id
                             where t.tag_id = ?`;
         const result = await db.query(sql, [tag_id]);
+        console.log("THIS IS A METHOD TO GET LISTINGS BY TAGS");
+        result.forEach(listing => {
+            if (listing.photo_url_1) {
+                listing.image_path = `/images/listings/${listing.photo_url_1}`;
+            } else {
+                listing.image_path = `/images/listings/default-listing-pic.jpg`;
+            }
+        });
+        console.log(result);
         return result;
 
     }
@@ -78,6 +94,27 @@ class Listing {
         const sql = `select count(*) as total from listings`;
         const total = await db.query(sql);
         return total;
+    }
+
+    setImagePath() {
+        if (this.photo_url_1) {
+            this.image_path = `/images/listings/${this.photo_url_1}`;
+        } else {
+            this.image_path = `/images/listings/default-listing-pic.jpg`;
+        }
+    }
+
+    static async getListingsByUserId(user_id) {
+        const sql = `select * from listings where user_id = ?`;
+        const result = await db.query(sql, [user_id]);
+        result.forEach(listing => {
+            if (listing.photo_url_1) {
+                listing.image_path = `/images/listings/${listing.photo_url_1}`;
+            } else {
+                listing.image_path = `/images/listings/default-listing-pic.jpg`;
+            }
+        });
+        return result;
     }
 }
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db
--- Generation Time: Mar 24, 2026 at 12:15 AM
+-- Generation Time: Mar 24, 2026 at 04:16 AM
 -- Server version: 9.6.0
 -- PHP Version: 8.3.26
 
@@ -77,12 +77,12 @@ CREATE TABLE `listings` (
 --
 
 INSERT INTO `listings` (`listing_id`, `user_id`, `category_id`, `title`, `description`, `exchange_type`, `condition_status`, `condition_notes`, `photo_url_1`, `photo_url_2`, `photo_url_3`, `swap_preferences`, `is_available`, `view_count`, `request_count`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 'Python Programming Book', 'Good for beginners', 'lending', 'good', NULL, NULL, NULL, NULL, NULL, 1, 0, 0, '2026-03-19 00:26:42', '2026-03-19 00:26:42'),
-(2, 2, 2, 'MacBook Charger', 'Works perfectly', 'giveaway', 'good', NULL, NULL, NULL, NULL, NULL, 1, 0, 0, '2026-03-19 00:26:42', '2026-03-19 00:26:42'),
-(3, 3, 3, 'Rice Cooker', 'Small size', 'lending', 'fair', NULL, NULL, NULL, NULL, NULL, 1, 0, 0, '2026-03-19 00:26:42', '2026-03-19 00:26:42'),
-(4, 4, 4, 'Yoga Mat', 'Barely used', 'swap', 'like_new', NULL, NULL, NULL, NULL, NULL, 1, 0, 0, '2026-03-19 00:26:42', '2026-03-19 00:26:42'),
-(5, 5, 5, 'Desk Chair', 'Used but comfy', 'giveaway', 'well_used', NULL, NULL, NULL, NULL, NULL, 1, 0, 0, '2026-03-19 00:26:42', '2026-03-19 00:26:42'),
-(6, 6, 1, 'Algorithms Book', 'Helpful for exams', 'lending', 'good', NULL, NULL, NULL, NULL, NULL, 1, 0, 0, '2026-03-19 00:26:42', '2026-03-19 00:26:42'),
+(1, 1, 1, 'Python Programming Book', 'Good for beginners', 'lending', 'good', NULL, 'listing_pic_1.jpg', NULL, NULL, NULL, 1, 0, 0, '2026-03-19 00:26:42', '2026-03-24 03:18:53'),
+(2, 2, 2, 'MacBook Charger', 'Works perfectly', 'giveaway', 'good', NULL, 'listing_pic_2.jpg', NULL, NULL, NULL, 1, 0, 0, '2026-03-19 00:26:42', '2026-03-24 03:19:13'),
+(3, 3, 3, 'Rice Cooker', 'Small size', 'lending', 'fair', NULL, 'listing_pic_3.jpg', NULL, NULL, NULL, 1, 0, 0, '2026-03-19 00:26:42', '2026-03-24 03:19:37'),
+(4, 4, 4, 'Yoga Mat', 'Barely used', 'swap', 'like_new', NULL, 'listing_pic_4.jpg', NULL, NULL, NULL, 1, 0, 0, '2026-03-19 00:26:42', '2026-03-24 03:19:57'),
+(5, 5, 5, 'Desk Chair', 'Used but comfy', 'giveaway', 'well_used', NULL, 'listing_pic_5.jpg', NULL, NULL, NULL, 1, 0, 0, '2026-03-19 00:26:42', '2026-03-24 03:20:15'),
+(6, 6, 1, 'Algorithms Book', 'Helpful for exams', 'lending', 'good', NULL, 'listing_pic_6.jpg', NULL, NULL, NULL, 1, 0, 0, '2026-03-19 00:26:42', '2026-03-24 03:20:35'),
 (7, 7, 2, 'Bluetooth Speaker', 'Loud and clear', 'swap', 'good', NULL, NULL, NULL, NULL, NULL, 1, 0, 0, '2026-03-19 00:26:42', '2026-03-19 00:26:42'),
 (8, 8, 3, 'Toaster', 'Works fine', 'giveaway', 'fair', NULL, NULL, NULL, NULL, NULL, 1, 0, 0, '2026-03-19 00:26:42', '2026-03-19 00:26:42'),
 (9, 9, 4, 'Football', 'Almost new', 'lending', 'like_new', NULL, NULL, NULL, NULL, NULL, 1, 0, 0, '2026-03-19 00:26:42', '2026-03-19 00:26:42'),

@@ -2,21 +2,34 @@ extends layout
 
 block content
     .row.justify-content-center
-        .col-lg-8
+        .col-lg-10
             .card.shadow-sm.border-0
+
                 .card-body.p-4
+
+                    // Avatar + Name
                     .text-center.mb-4
-                        img.rounded-circle.mb-3(
-                            src=`images/users/${user.profile_pic} || 'default-avatar.png'}`
+                        img.rounded-circle.mb-3.shadow-sm(
+                            src=user.image_path
                             alt="User avatar"
-                            width="140"
-                            height="140"
+                            width="200"
+                            height="200"
+                            style="object-fit: cover;"
                         )
 
                         h1.card-title.mb-1 #{user.first_name} #{user.last_name}
+
+                        if user.is_active
+                            span.badge.bg-success.mb-2 Active
+                        else
+                            span.badge.bg-secondary.mb-2 Inactive
+
                         p.text-muted.mb-0 Community member on ShareLoop
 
+                    // Info Cards
                     .row.g-3.mt-2
+
+                        // Basic Info
                         .col-md-6
                             .card.h-100.bg-light
                                 .card-body
@@ -31,6 +44,7 @@ block content
                                         strong Location:
                                         |  #{user.location || "Unknown"}
 
+                        // Stats
                         .col-md-6
                             .card.h-100.bg-light
                                 .card-body
@@ -40,18 +54,110 @@ block content
                                         |  #{user.points || 0}
                                     p.mb-2
                                         strong Rating:
-                                        |  #{user.average_rating || "N/A"}
+                                        |  #{user.average_rating || "N/A"} ⭐
+                                    p.mb-2
+                                        strong Lent:
+                                        |  #{user.items_lent || 0}
+                                    p.mb-2
+                                        strong Borrowed:
+                                        |  #{user.items_borrowed || 0}
                                     p.mb-0
-                                        strong Joined:
-                                        |  #{user.formatted_created_at || "Unknown"}
+                                        strong Given Away:
+                                        |  #{user.items_given || 0}
 
+                    // Bio
                     .mt-4
                         h5.mb-2 Bio
                         p.mb-0 #{user.bio || "No bio available."}
 
+                    // Listings Section (BIG upgrade)
+                    .mt-5
+                        h5.mb-3 Listings (#{listings.length})
+
+                        if listings.length > 0
+                            .row.g-3
+                                each listing in listings
+                                    .col-md-6.col-lg-4
+                                        .card.h-100.shadow-sm.border-0
+                                            img.card-img-top(
+                                                src=listing.image_path
+                                                alt="Listing image"
+                                                style="height:150px; object-fit:cover;"
+                                            )
+
+                                            .card-body.d-flex.flex-column
+                                                h6.card-title
+                                                    a.text-decoration-none.text-dark(
+                                                        href=`/listing-detail/${listing.listing_id}`
+                                                    ) #{listing.title}
+
+                                                p.text-muted.mb-0 #{listing.exchange_type || "Unknown"}
+                        else
+                            p.text-muted This user has no listings yet.
+
+                // Footer
                 .card-footer.bg-white.border-0.pt-0.pb-4.px-4
-                    .d-flex.flex-wrap.gap-2
+                    .d-flex.flex-wrap.gap-2.justify-content-between
                         a.btn.btn-dark(href="/all-users-formatted") Back to Users
+                        a.btn.btn-outline-primary(href="#") Message User
+
+
+
+
+//- extends layout
+
+//- block content
+//-     .row.justify-content-center
+//-         .col-lg-8
+//-             .card.shadow-sm.border-0
+//-                 .card-body.p-4
+//-                     .text-center.mb-4
+//-                         img.rounded-circle.mb-3(
+//-                             src=user.image_path
+//-                             alt="User avatar"
+//-                             width="200"
+//-                             height="200"
+//-                         )
+
+//-                         h1.card-title.mb-1 #{user.first_name} #{user.last_name}
+//-                         p.text-muted.mb-0 Community member on ShareLoop
+
+//-                     .row.g-3.mt-2
+//-                         .col-md-6
+//-                             .card.h-100.bg-light
+//-                                 .card-body
+//-                                     h6.card-subtitle.mb-3.text-muted Basic Information
+//-                                     p.mb-2
+//-                                         strong User ID:
+//-                                         |  #{user.user_id}
+//-                                     p.mb-2
+//-                                         strong Email:
+//-                                         |  #{user.email}
+//-                                     p.mb-0
+//-                                         strong Location:
+//-                                         |  #{user.location || "Unknown"}
+
+//-                         .col-md-6
+//-                             .card.h-100.bg-light
+//-                                 .card-body
+//-                                     h6.card-subtitle.mb-3.text-muted Community Stats
+//-                                     p.mb-2
+//-                                         strong Points:
+//-                                         |  #{user.points || 0}
+//-                                     p.mb-2
+//-                                         strong Rating:
+//-                                         |  #{user.average_rating || "N/A"}
+//-                                     p.mb-0
+//-                                         strong Joined:
+//-                                         |  #{user.formatted_created_at || "Unknown"}
+
+//-                     .mt-4
+//-                         h5.mb-2 Bio
+//-                         p.mb-0 #{user.bio || "No bio available."}
+
+//-                 .card-footer.bg-white.border-0.pt-0.pb-4.px-4
+//-                     .d-flex.flex-wrap.gap-2
+//-                         a.btn.btn-dark(href="/all-users-formatted") Back to Users
 
 
 //- extends layout 
